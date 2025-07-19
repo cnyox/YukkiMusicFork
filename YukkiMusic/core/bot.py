@@ -7,10 +7,11 @@
 #
 # All rights reserved.
 
-import sys
+import sys, uvloop
 
 from pyrogram import Client
 from pyrogram.types import BotCommand
+from pyrogram.enums import ChatMemberStatus, ParseMode
 
 import config
 
@@ -21,10 +22,13 @@ class YukkiBot(Client):
     def __init__(self):
         LOGGER(__name__).info(f"Starting Bot")
         super().__init__(
-            "YukkiMusicBot",
+            name="YukkiMusicBot",
             api_id=config.API_ID,
             api_hash=config.API_HASH,
             bot_token=config.BOT_TOKEN,
+            in_memory=True,
+            parse_mode=ParseMode.DEFAULT,
+            max_concurrent_transmissions=7,
         )
 
     async def start(self):
@@ -32,6 +36,7 @@ class YukkiBot(Client):
         get_me = await self.get_me()
         self.username = get_me.username
         self.id = get_me.id
+        self.mention = get_me.mention
         try:
             await self.send_message(
                 config.LOG_GROUP_ID, "Bot Started"
@@ -45,6 +50,8 @@ class YukkiBot(Client):
             try:
                 await self.set_bot_commands(
                     [
+                        BotCommand("start", "Check the bot start msg"),
+                        BotCommand("help", "Check help msg to see all commands"),
                         BotCommand("ping", "Check that bot is alive or dead"),
                         BotCommand("play", "Starts playing the requested song"),
                         BotCommand("skip", "Moves to the next track in queue"),
@@ -61,7 +68,7 @@ class YukkiBot(Client):
         else:
             pass
         a = await self.get_chat_member(config.LOG_GROUP_ID, self.id)
-        if a.status != "administrator":
+        if a.status != ChatMemberStatus.ADMINISTRATOR:
             LOGGER(__name__).error(
                 "Please promote Bot as Admin in Logger Group"
             )
@@ -71,3 +78,6 @@ class YukkiBot(Client):
         else:
             self.name = get_me.first_name
         LOGGER(__name__).info(f"MusicBot Started as {self.name}")
+
+if sys.platform != "win32":
+    uvloop.install()
