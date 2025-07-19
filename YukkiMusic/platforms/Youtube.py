@@ -1,4 +1,12 @@
-import asyncio, os, random, re, time, uuid, aiofiles, httpx, yt_dlp
+import asyncio
+import os
+import random
+import re
+import time
+import uuid
+import aiofiles
+import httpx
+import yt_dlp
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Optional, Union
@@ -183,21 +191,36 @@ class YouTubeAPI:
         if not dl_url:
             LOGGER(__name__).error("API response is empty")
             return None
-        if not re.match(r"https:\/\/t\.me\/([a-zA-Z0-9_]{5,})\/(\d+)", dl_url):
+        if not re.match(r"https:\/\/t\.me\/(?:[a-zA-Z0-9_]{5,}|c\/\d+)\/(\d+)", dl_url):
             dl = await self.download_file(dl_url)
             return dl.file_path if dl.success else None
         try:
-            msg = await app.get_messages(message_ids=int(dl_url.split("/")[-1]))
+            # Handle both public (@username) and private (c/123456) Telegram URLs
+            match = re.match(r"https:\/\/t\.me\/([a-zA-Z0-9_]{5,}|c\/\d+)\/(\d+)", dl_url)
+            if not match:
+                LOGGER(__name__).error("Invalid Telegram URL format")
+                return None
+            chat_id, message_id = match.groups()
+            # For private chats, prepend -100 to the numeric chat_id
+            if chat_id.startswith("c/"):
+                chat_id = f"-100{chat_id[2:]}"
+            msg = await app.get_messages(chat_id=chat_id, message_ids=int(message_id))
             if not msg:
-                LOGGER(__name__).error("Message not found in Telegram channel")
+                LOGGER(__name__).error("Message not found in Telegram chat")
                 return None
             path = await msg.download()
             return Path(path) if path else None
         except errors.FloodWait as e:
             await asyncio.sleep(e.value + 1)
             return await self.download_with_api(video_id, is_video)
+        except errors.ChatForbidden:
+            LOGGER(__name__).error(f"Bot does not have access to the Telegram chat: {chat_id}")
+            return None
+        except errors.ChannelInvalid:
+            LOGGER(__name__).error(f"Invalid Telegram channel or group: {chat_id}")
+            return None
         except Exception as e:
-            LOGGER(__name__).error(f"Error getting message from Telegram channel: {e}")
+            LOGGER(__name__).error(f"Error getting message from Telegram chat: {e}")
             return None
 
     async def exists(self, link: str, videoid: Union[bool, str] = None) -> bool:
