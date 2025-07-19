@@ -131,7 +131,7 @@ COOKIES_URL=https://batbin.me/abc123, https://pastebin.com/raw/xyz456
    ```
 5. **Clone the Repository**
    ```bash
-   git clone https://github.com/CyberPixelPro/AviaxMusic && cd AviaxMusic
+   git clone https://github.com/cntml/YukkiMusicFork && cd YukkiMusicFork
    ```
 6. **Install Requirements**
    ```bash
