@@ -166,6 +166,10 @@ clean = {}
 
 autoclean = []
 
+
+# Cookies URL - here
+COOKIES_URL = getenv("COOKIES_URL", "")
+
 # API URL - here
 API_URL = getenv("API_URL", "https://tgmusic.fallenapi.fun")
 
