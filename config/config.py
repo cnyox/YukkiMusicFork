@@ -56,7 +56,7 @@ HEROKU_APP_NAME = getenv("HEROKU_APP_NAME")
 # For customized or modified Repository
 UPSTREAM_REPO = getenv(
     "UPSTREAM_REPO",
-    "https://github.com/TeamYukki/YukkiMusicBot",
+    "https://github.com/cntml/YukkiMusicFork",
 )
 UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "master")
 
@@ -165,6 +165,10 @@ userstats = {}
 clean = {}
 
 autoclean = []
+
+API_URL = getenv("API_URL")
+API_KEY = getenv("API_KEY")
+DOWNLOADS_DIR = "downloads"
 
 
 # Images
