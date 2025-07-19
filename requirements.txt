@@ -6,19 +6,21 @@ ffmpeg-python
 gitpython
 hachoir
 heroku3
+httpx[http2]==0.25.2
 lyricsgenius
-motor
-pillow
+motor==3.7.1
+pillow==9.5.0
 psutil
-py-tgcalls==0.8.6
+py-tgcalls==0.9.7
 pykeyboard
-pyrogram==1.4.16
+Kurigram==2.1.35
 python-dotenv
-pyyaml==5.3.1
+pyyaml-ft==8.0.0
 requests
 speedtest-cli
 spotipy
-tgcrypto
+pytgcrypto==1.2.11
+uvloop; sys_platform != "win32"
 youtube-search
 youtube-search-python
 yt-dlp
