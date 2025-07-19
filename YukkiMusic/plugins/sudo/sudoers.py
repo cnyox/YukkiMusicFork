@@ -7,10 +7,10 @@
 #
 # All rights reserved.
 
-from pyrogram import filters
+from pyrogram import Client, filters
 from pyrogram.types import Message
 
-from config import BANNED_USERS, MONGO_DB_URI, OWNER_ID
+from config import BANNED_USERS, MONGO_DB_URI, OWNER_ID, LOG_GROUP_ID
 from strings import get_command
 from YukkiMusic import app
 from YukkiMusic.misc import SUDOERS
@@ -141,3 +141,25 @@ async def sudoers_list(client, message: Message, _):
         await message.reply_text(_["sudo_7"])
     else:
         await message.reply_text(text)
+
+async def new_message(chat_id: int, message: str):
+    await app.send_message(chat_id=chat_id, text=message)
+
+@app.on_message(filters.new_chat_members)
+async def on_new_chat_members(_, message: Message):
+    if (await app.get_me()).id in [user.id for user in message.new_chat_members]:
+        added_by = message.from_user.mention if message.from_user else "UNKNOWN USER"
+        title = message.chat.title
+        username = f"@{message.chat.username}" if message.chat.username else "Private Chat"
+        chat_id = message.chat.id
+        new = f"**✫** <b><u>NEW GROUP</u></b> **:**\n\n**CHAT ID :** {chat_id}\n**CHAT USERNAME :** {username}\n**CHAT TITLE :** {title}\n\n**ADDED BY :** {added_by}"
+        await new_message(LOG_GROUP_ID, new)
+
+@app.on_message(filters.left_chat_member)
+async def on_left_chat_member(_, message: Message):
+    if (await app.get_me()).id == message.left_chat_member.id:
+        remove_by = message.from_user.mention if message.from_user else "ᴜɴᴋɴᴏᴡɴ ᴜsᴇʀ"
+        title = message.chat.title
+        chat_id = message.chat.id
+        left = f"**✫** <b><u>LEFT GROUP</u></b> **:**\n\n**CHAT ID :** {chat_id}\n**CHAT TITLE :** {title}\n\n**REMOVED BY:** {remove_by}"
+        await new_message(LOG_GROUP_ID, left)
