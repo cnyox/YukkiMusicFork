@@ -9,9 +9,9 @@ from pyrogram.enums import MessageEntityType
 from pyrogram.types import Message
 from youtubesearchpython.__future__ import VideosSearch
 
-from AnonXMusic.logging import LOGGER
-from AnonXMusic.utils.database import is_on_off
-from AnonXMusic.utils.formatters import time_to_seconds
+from YukkiMusic.logging import LOGGER
+from YukkiMusic.utils.database import is_on_off
+from YukkiMusic.utils.formatters import time_to_seconds
 from config import API_URL, API_KEY, DOWNLOADS_DIR
 
 @dataclass
