@@ -68,6 +68,16 @@
         "value": "",
         "required": true
       },
+      "API_KEY": {
+        "description": "Your yt api key for this you can buy this key from @FallenApiBot this bot available on telegram according to your need",
+        "value": "",
+        "required": true
+      },
+      "API_URL": {
+        "description": "This your api key's endpoint url which is already filled you don't need to change this but if you want to use another api url with different endpoints so you can remove this one.",
+        "value": "https://tgmusic.fallenapi.fun",
+        "required": true
+      },
       "UPSTREAM_REPO": {
         "description": "If you dont know this, Leave as it is",
         "value": "https://github.com/cntml/YukkiMusicFork",
