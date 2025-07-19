@@ -20,7 +20,7 @@ class DownloadResult:
     file_path: Optional[Path] = None
     error: Optional[str] = None
 
-class YouTubeUtils:
+class YouTubeAPI:
     DEFAULT_TIMEOUT = 120
     DEFAULT_DOWNLOAD_TIMEOUT = 120
     CHUNK_SIZE = 8192
@@ -174,7 +174,7 @@ class YouTubeUtils:
         if not video_id:
             LOGGER(__name__).warning("Video ID is None")
             return None
-        from AnonXMusic import app
+        from YukkiMusic import app
         public_url = await self.make_request(f"{API_URL}/yt?id={video_id}&video={is_video}")
         if not public_url:
             LOGGER(__name__).error("No response from API")
