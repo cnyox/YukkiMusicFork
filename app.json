@@ -74,7 +74,7 @@
         "required": true
       },
       "API_URL": {
-        "description": "This your api key's endpoint url which is already filled you don't need to change this but if you want to use another api url with different endpoints so you can remove this one.",
+        "description": "This is your api key's endpoint url which is already filled you don't need to change this but if you want to use another api url with different endpoints so you can remove this one.",
         "value": "https://tgmusic.fallenapi.fun",
         "required": true
       },
