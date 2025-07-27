@@ -119,7 +119,7 @@ async def song_helper_cb(client, CallbackQuery, _):
         keyboard = InlineKeyboard()
         done = []
         for x in formats_available:
-            if x["ext"] not in ["m4a"]:  # Restrict to audio formats
+            if x["ext"] not in ["webm"]:  # Restrict to audio formats
                 continue
             form = x.get("format_note", "Unknown").title()
             sz = convert_bytes(x["filesize"]) if x["filesize"] else "Unknown Size"
