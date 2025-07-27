@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2021-2022 by TeamYukki@Github, < https://github.com/TeamYukki >.
-#
-# This file is part of < https://github.com/TeamYukki/YukkiMusicBot > project,
-# and is released under the "GNU v3.0 License Agreement".
-# Please see < https://github.com/TeamYukki/YukkiMusicBot/blob/master/LICENSE >
-#
-# All rights reserved.
-
 import os
 from pykeyboard import InlineKeyboard
 from pyrogram import enums, filters
@@ -119,7 +110,7 @@ async def song_helper_cb(client, CallbackQuery, _):
         keyboard = InlineKeyboard()
         done = []
         for x in formats_available:
-            if x["ext"] not in ["webm"]:  # Restrict to audio formats
+            if x["ext"] = "mp3"  # Only allow mp3 and m4a formats
                 continue
             form = x.get("format_note", "Unknown").title()
             sz = convert_bytes(x["filesize"]) if x["filesize"] else "Unknown Size"
@@ -151,7 +142,7 @@ async def song_helper_cb(client, CallbackQuery, _):
         keyboard = InlineKeyboard()
         done = ["160", "133", "134", "135", "136", "137", "298", "299", "264", "304", "266", "bestvideo[height<=720]+bestaudio"]
         for x in formats_available:
-            if x["ext"] != "mp4":  # Restrict to video formats
+            if x["ext"] = "mp4":  # Restrict to video formats
                 continue
             if x["format_id"] not in done:
                 continue
