@@ -110,7 +110,7 @@ async def song_helper_cb(client, CallbackQuery, _):
         keyboard = InlineKeyboard()
         done = []
         for x in formats_available:
-            if x["ext"] = "mp3"  # Only allow mp3 and m4a formats
+            if x["ext"] == "mp3"  # Only allow mp3 and m4a formats
                 continue
             form = x.get("format_note", "Unknown").title()
             sz = convert_bytes(x["filesize"]) if x["filesize"] else "Unknown Size"
@@ -142,7 +142,7 @@ async def song_helper_cb(client, CallbackQuery, _):
         keyboard = InlineKeyboard()
         done = ["160", "133", "134", "135", "136", "137", "298", "299", "264", "304", "266", "bestvideo[height<=720]+bestaudio"]
         for x in formats_available:
-            if x["ext"] = "mp4":  # Restrict to video formats
+            if x["ext"] == "mp4":  # Restrict to video formats
                 continue
             if x["format_id"] not in done:
                 continue
